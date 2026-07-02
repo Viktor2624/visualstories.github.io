@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VisualStories | Cinematic Weddings</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+/* ========== BASE RESET ========== */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+html,body{width:100%;height:100%;background:#070707;color:#fff;overflow-x:hidden;scroll-behavior:smooth}
+:root{
+--gold:#c9a24e;
+--soft:#ffffff10;
+--soft2:#ffffff1a;
+--gray:#bdbdbd;
+}
+
+/* ========== CURSOR ========== */
+.cursor{
+position:fixed;
+width:12px;
+height:12px;
+border-radius:50%;
+background:var(--gold);
+pointer-events:none;
+z-index:9999;
+mix-blend-mode:difference;
+transform:translate(-50%,-50%);
+transition:transform .08s ease;
+}
+
+/* ========== NAV ========== */
+nav{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+padding:25px 70px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:1000;
+transition:.4s ease;
+}
+
+nav.scrolled{
+background:rgba(0,0,0,.65);
+backdrop-filter:blur(12px);
+padding:15px 70px;
+border-bottom:1px solid var(--soft);
+}
+
+.logo{
+font-size:18px;
+letter-spacing:4px;
+font-weight:600;
+}
+
+.logo span{color:var(--gold)}
+
+nav ul{
+display:flex;
+gap:35px;
+list-style:none;
+}
+
+nav ul li a{
+color:#fff;
+text-decoration:none;
+font-size:13px;
+letter-spacing:2px;
+opacity:.8;
+transition:.3s;
+}
+
+nav ul li a:hover{
+opacity:1;
+color:var(--gold);
+}
+
+/* ========== HERO ========== */
+.hero{
+height:100vh;
+width:100%;
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+overflow:hidden;
+}
+
+.hero video{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+min-width:100%;
+min-height:100%;
+object-fit:cover;
+filter:brightness(.45) contrast(1.1);
+}
+
+.hero::after{
+content:"";
+position:absolute;
+inset:0;
+background:radial-gradient(circle at center,transparent 0%,rgba(0,0,0,.85) 70%);
+}
+
+.hero-content{
+position:relative;
+z-index:2;
+max-width:900px;
+}
+
+.hero h1{
+font-size:70px;
+letter-spacing:6px;
+text-transform:uppercase;
+font-weight:600;
+opacity:0;
+transform:translateY(30px);
+animation:fadeUp 1.2s ease forwards;
+}
+
+.hero h1 span{color:var(--gold)}
+
+.hero p{
+margin-top:20px;
+font-size:18px;
+color:var(--gray);
+opacity:0;
+animation:fadeUp 1.8s ease forwards;
+}
+
+/* ========== BUTTON ========== */
+.btn{
+margin-top:35px;
+padding:14px 34px;
+border:1px solid var(--gold);
+background:transparent;
+color:#fff;
+letter-spacing:2px;
+font-size:13px;
+cursor:pointer;
+transition:.4s;
+position:relative;
+overflow:hidden;
+}
+
+.btn:hover{
+background:var(--gold);
+color:#000;
+transform:translateY(-2px);
+}
+
+/* ========== SECTIONS BASE ========== */
+section{
+padding:140px 90px;
+position:relative;
+}
+
+/* ========== SECTION TITLE ========== */
+.section-title{
+font-size:40px;
+text-align:center;
+margin-bottom:60px;
+letter-spacing:3px;
+}
+
+/* ========== ABOUT ========== */
+.about{
+display:flex;
+gap:70px;
+align-items:center;
+}
+
+.about img{
+width:50%;
+border-radius:12px;
+filter:grayscale(20%);
+transform:scale(1);
+transition:.6s;
+}
+
+.about img:hover{
+transform:scale(1.03);
+filter:grayscale(0%);
+}
+
+.about-text h2{
+font-size:38px;
+margin-bottom:20px;
+}
+
+.about-text p{
+color:var(--gray);
+line-height:1.8;
+}
+
+/* ========== GRID WORK ========== */
+.work-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+}
+
+.work-item{
+position:relative;
+overflow:hidden;
+border-radius:12px;
+}
+
+.work-item img{
+width:100%;
+height:100%;
+object-fit:cover;
+transition:.7s ease;
+}
+
+.work-item:hover img{
+transform:scale(1.12);
+filter:brightness(.7);
+}
+
+/* ========== FEATURES ========== */
+.features{
+display:flex;
+gap:40px;
+}
+
+.feature{
+flex:1;
+padding:35px;
+background:var(--soft);
+border:1px solid var(--soft2);
+border-radius:12px;
+transition:.4s;
+}
+
+.feature:hover{
+transform:translateY(-6px);
+border-color:var(--gold);
+}
+
+/* ========== PRICING ========== */
+.pricing{
+display:flex;
+gap:35px;
+}
+
+.price-card{
+flex:1;
+padding:45px;
+text-align:center;
+background:var(--soft);
+border-radius:14px;
+border:1px solid var(--soft2);
+transition:.4s;
+}
+
+.price-card:hover{
+transform:scale(1.05);
+border-color:var(--gold);
+}
+
+.price{
+font-size:34px;
+color:var(--gold);
+margin:20px 0;
+}
+
+/* ========== TESTIMONIALS ========== */
+.testimonials{
+display:flex;
+gap:30px;
+}
+
+.testimonial{
+flex:1;
+padding:30px;
+background:var(--soft);
+border-radius:12px;
+font-style:italic;
+}
+
+/* ========== CONTACT ========== */
+.contact{
+display:flex;
+gap:60px;
+}
+
+form{
+flex:1;
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+input,textarea{
+padding:15px;
+background:transparent;
+border:1px solid var(--soft2);
+color:#fff;
+outline:none;
+border-radius:6px;
+transition:.3s;
+}
+
+input:focus,textarea:focus{
+border-color:var(--gold);
+}
+
+/* ========== FOOTER ========== */
+footer{
+text-align:center;
+padding:50px;
+border-top:1px solid var(--soft2);
+color:var(--gray);
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(40px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+/* ========== RESPONSIVE ========== */
+@media(max-width:1024px){
+.about,.features,.pricing,.testimonials,.contact{flex-direction:column}
+.work-grid{grid-template-columns:1fr 1fr}
+section{padding:100px 40px}
+.hero h1{font-size:50px}
+nav{padding:20px 40px}
+}
+
+@media(max-width:600px){
+.work-grid{grid-template-columns:1fr}
+.hero h1{font-size:34px}
+nav ul{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<div class="cursor"></div>
+
+<!-- NAV -->
+<nav>
+<div class="logo">VISUAL<span>STORIES</span></div>
+<ul>
+<li><a href="#about">O nás</a></li>
+<li><a href="#work">Práca</a></li>
+<li><a href="#pricing">Cenník</a></li>
+<li><a href="#contact">Kontakt</a></li>
+</ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+<video autoplay muted loop>
+<source src="video.mp4">
+</video>
+
+<div class="hero-content">
+<h1>WE TELL <span>STORIES</span></h1>
+<p>Cinematic wedding films & photography</p>
+<button class="btn">Zobraziť prácu</button>
+</div>
+</section>
+<!-- ABOUT -->
+<section id="about" class="about">
+<img src="about.jpg" alt="About us">
+<div class="about-text">
+<h2>O nás</h2>
+<p>
+Sme duo kameraman + fotografka, ktorí tvoria filmové svadobné príbehy.
+Naším cieľom nie je len dokumentovať deň, ale vyrozprávať emóciu,
+atmosféru a skutočný príbeh, ktorý sa už nikdy nezopakuje.
+</p>
+</div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+<h2 class="section-title">Naša práca</h2>
+<div class="work-grid">
+
+<div class="work-item">
+<img src="1.jpg" alt="">
+</div>
+
+<div class="work-item">
+<img src="2.jpg" alt="">
+</div>
+
+<div class="work-item">
+<img src="3.jpg" alt="">
+</div>
+
+<div class="work-item">
+<img src="4.jpg" alt="">
+</div>
+
+<div class="work-item">
+<img src="5.jpg" alt="">
+</div>
+
+<div class="work-item">
+<img src="6.jpg" alt="">
+</div>
+
+</div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+
+<div class="feature">
+<h3>Cinematic štýl</h3>
+<p>Každý záber je komponovaný ako filmová scéna.</p>
+</div>
+
+<div class="feature">
+<h3>Dvojitý pohľad</h3>
+<p>Kamera + fotografia zároveň pre kompletný príbeh.</p>
+</div>
+
+<div class="feature">
+<h3>Emócia na prvom mieste</h3>
+<p>Nejde o techniku, ale o moment, ktorý cítiš.</p>
+</div>
+
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="pricing">
+
+<div class="price-card">
+<h3>Basic</h3>
+<div class="price">900€</div>
+<p>Fotografie + krátky zostrih</p>
+<button class="btn">Vybrať</button>
+</div>
+
+<div class="price-card">
+<h3>Premium</h3>
+<div class="price">1500€</div>
+<p>Film + fotografie + teaser video</p>
+<button class="btn">Vybrať</button>
+</div>
+
+<div class="price-card">
+<h3>Cinema</h3>
+<div class="price">2200€</div>
+<p>Plnohodnotný filmový svadobný príbeh</p>
+<button class="btn">Vybrať</button>
+</div>
+
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+
+<div class="testimonial">
+„Vyzerá to ako film z kina. Úplne iný level.“
+</div>
+
+<div class="testimonial">
+„Zachytili momenty, ktoré sme si ani nevšimli.“
+</div>
+
+<div class="testimonial">
+„Najkrajšia spomienka na náš deň.“
+</div>
+
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+
+<form>
+<input type="text" placeholder="Meno">
+<input type="email" placeholder="Email">
+<textarea rows="5" placeholder="Správa"></textarea>
+<button class="btn" type="submit">Odoslať</button>
+</form>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+© 2026 VisualStories | Cinematic Wedding Studio
+</footer>
+  <script>
+// ========== CURSOR ==========
+const cursor = document.querySelector(".cursor");
+
+document.addEventListener("mousemove", (e) => {
+cursor.style.left = e.clientX + "px";
+cursor.style.top = e.clientY + "px";
+});
+
+// ========== NAV SCROLL EFFECT ==========
+const nav = document.querySelector("nav");
+
+window.addEventListener("scroll", () => {
+if(window.scrollY > 50){
+nav.classList.add("scrolled");
+} else {
+nav.classList.remove("scrolled");
+}
+});
+
+// ========== SMOOTH REVEAL ON SCROLL ==========
+const revealElements = document.querySelectorAll("section, .feature, .price-card, .testimonial, .work-item");
+
+const observer = new IntersectionObserver(entries => {
+entries.forEach(entry => {
+if(entry.isIntersecting){
+entry.target.style.opacity = 1;
+entry.target.style.transform = "translateY(0)";
+entry.target.style.transition = "1s ease";
+}
+});
+}, { threshold: 0.15 });
+
+revealElements.forEach(el => {
+el.style.opacity = 0;
+el.style.transform = "translateY(40px)";
+observer.observe(el);
+});
+
+// ========== HERO PARALLAX ==========
+const hero = document.querySelector(".hero");
+
+window.addEventListener("scroll", () => {
+let offset = window.scrollY;
+hero.style.transform = `translateY(${offset * 0.3}px)`;
+});
+
+// ========== BUTTON GLOW EFFECT ==========
+document.querySelectorAll(".btn").forEach(btn => {
+btn.addEventListener("mousemove", (e) => {
+const rect = btn.getBoundingClientRect();
+const x = e.clientX - rect.left;
+const y = e.clientY - rect.top;
+
+btn.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(201,162,78,0.4), transparent 40%)`;
+});
+
+btn.addEventListener("mouseleave", () => {
+btn.style.background = "transparent";
+});
+});
+
+// ========== SMOOTH SCROLL FOR MENU ==========
+document.querySelectorAll("nav ul li a").forEach(link => {
+link.addEventListener("click", (e) => {
+e.preventDefault();
+const target = document.querySelector(link.getAttribute("href"));
+if(target){
+target.scrollIntoView({ behavior: "smooth" });
+}
+});
+});
+
+// ========== LOADING INTRO ==========
+window.addEventListener("load", () => {
+document.body.style.opacity = 0;
+setTimeout(() => {
+document.body.style.transition = "1s ease";
+document.body.style.opacity = 1;
+}, 200);
+});
+</script>
+</body>
+</html>
