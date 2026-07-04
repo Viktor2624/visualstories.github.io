@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VisualStories | Ultra Premium Cinematic Web Experience</title>
+    <title>VisualStories | Premium Cinematic Production</title>
     
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,72 +13,91 @@
 
     <style>
         /* ==========================================================================
-           1. RESET, DESIGN SYSTEM & CORE VARIABLES
+           1. RESET, DESIGN SYSTEM & VARIABLES
            ========================================================================== */
         *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             user-select: none;
-            -webkit-user-drag: none;
         }
 
         :root {
             --bg-pure: #030303;
-            --bg-dark: #07070a;
-            --bg-card: #0d0d12;
-            --bg-card-light: #14141c;
+            --bg-dark: #08080c;
+            --bg-card: #0e0e14;
+            --bg-card-light: #161622;
             --accent: #e5c158;
             --accent-bright: #fff0c2;
             --text-main: #f9fafb;
-            --text-muted: #9ca3af;
-            --text-dark: #4b5563;
+            --text-muted: #a1a1aa;
+            --text-dark: #52525b;
             --font-serif: 'Cinzel', serif;
             --font-sans: 'Plus Jakarta Sans', sans-serif;
             --curve-premium: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        html, body {
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
             background-color: var(--bg-pure);
             color: var(--text-main);
             font-family: var(--font-sans);
             min-height: 100vh;
             overflow-x: hidden;
-            scroll-behavior: auto;
+            line-height: 1.6;
         }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-pure);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1f1f2e;
-            border-radius: 20px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent);
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-pure); }
+        ::-webkit-scrollbar-thumb { background: #1f1f2e; border-radius: 20px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-        /* Utility Classes */
+        /* Globálne rozloženie a sekcie */
         .container {
             width: 100%;
-            padding: 0 10%;
+            max-width: 1400px;
             margin: 0 auto;
-            max-width: 1920px;
+            padding: 0 40px;
         }
 
         .section-spacer {
-            padding: 160px 0;
+            padding: 140px 0;
             position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
         }
 
-        .noborder { border: none !important; }
+        .meta-num {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .section-desc {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin-bottom: 60px;
+            font-weight: 300;
+        }
 
         /* ==========================================================================
-           2. INTERACTIVE CANVAS & BACKGROUND LAYER
+           2. INTERACTIVE CANVAS BACKGROUND
            ========================================================================== */
         #bg-canvas {
             position: fixed;
@@ -98,11 +118,11 @@
             height: 100vh;
             z-index: 0;
             pointer-events: none;
-            background: radial-gradient(circle at center, transparent 20%, rgba(0,0,0,0.8) 90%);
+            background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.8) 100%);
         }
 
         /* ==========================================================================
-           3. ADVANCED HARDWARE-ACCELERATED PRELOADER
+           3. PRELOADER
            ========================================================================== */
         .ultra-preloader {
             position: fixed;
@@ -113,16 +133,11 @@
             background: #000;
             z-index: 99999;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            will-change: transform;
         }
 
-        .loader-context {
-            text-align: center;
-        }
-
+        .loader-context { text-align: center; }
         .loader-title {
             font-family: var(--font-serif);
             font-size: 2.5rem;
@@ -133,67 +148,40 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        .loader-track {
-            width: 250px;
-            height: 2px;
-            background: rgba(255,255,255,0.05);
-            position: relative;
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 0 auto;
-        }
-
-        .loader-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, transparent, var(--accent), var(--accent-bright));
-        }
-
-        .loader-number {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 15px;
-            font-weight: 600;
-            letter-spacing: 2px;
-        }
+        .loader-track { width: 250px; height: 2px; background: rgba(255,255,255,0.05); position: relative; margin: 0 auto; overflow: hidden; }
+        .loader-bar { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: var(--accent); }
+        .loader-number { font-size: 0.85rem; color: var(--text-muted); margin-top: 15px; letter-spacing: 2px; }
 
         /* ==========================================================================
-           4. PREMIUM GLASS HEADER & FULLSCREEN OVERLAY MENU
+           4. STABLE FIXED HEADER & OVERLAY NAVIGATION
            ========================================================================== */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 35px 60px;
+            padding: 30px 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 999;
-            background: linear-gradient(to bottom, rgba(3,3,3,0.8) 0%, transparent 100%);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(255,255,255,0.02);
-            transition: transform 0.5s var(--curve-premium);
+            background: linear-gradient(to bottom, rgba(3,3,3,0.9) 0%, transparent 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
         }
 
         .brand-logo {
             font-family: var(--font-serif);
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            letter-spacing: 5px;
+            letter-spacing: 4px;
             color: var(--text-main);
             text-decoration: none;
             text-transform: uppercase;
         }
 
-        .brand-logo span {
-            color: var(--accent);
-        }
+        .brand-logo span { color: var(--accent); }
 
         .menu-trigger {
             background: transparent;
@@ -201,8 +189,9 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            padding: 15px;
+            cursor: pointer;
             z-index: 1001;
+            padding: 10px;
         }
 
         .menu-trigger span {
@@ -226,51 +215,41 @@
             align-items: center;
             padding: 0 10%;
             transform: translateX(100%);
-            transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+            transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
         }
 
-        .fullscreen-menu.is-open {
-            transform: translateX(0);
-        }
-
-        .menu-nav-list {
-            list-style: none;
-        }
-
-        .menu-nav-item {
-            margin: 30px 0;
-            overflow: hidden;
-        }
-
+        .fullscreen-menu.is-open { transform: translateX(0); }
+        .menu-nav-list { list-style: none; }
+        .menu-nav-item { margin: 25px 0; }
+        
         .menu-nav-link {
             font-family: var(--font-serif);
-            font-size: 4.5rem;
+            font-size: 3.5rem;
             font-weight: 900;
             color: transparent;
-            -webkit-text-stroke: 1px rgba(255,255,255,0.15);
+            -webkit-text-stroke: 1px rgba(255,255,255,0.2);
             text-decoration: none;
             text-transform: uppercase;
             display: inline-block;
-            transition: transform 0.5s var(--curve-premium), color 0.5s, -webkit-text-stroke 0.5s;
+            transition: transform 0.4s var(--curve-premium), color 0.4s;
         }
 
         .menu-nav-link:hover {
             color: var(--text-main);
             -webkit-text-stroke: 1px var(--text-main);
-            transform: translateX(25px);
+            transform: translateX(20px);
         }
 
         .menu-nav-link span {
             color: var(--accent);
             font-family: var(--font-sans);
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 700;
             margin-right: 20px;
-            vertical-align: middle;
         }
 
         /* ==========================================================================
-           5. HERO SECTION WITH LINKED PARALLAX TIMELINE
+           5. HERO SECTION
            ========================================================================== */
         .hero-viewport {
             height: 100vh;
@@ -280,56 +259,32 @@
             justify-content: center;
             position: relative;
             z-index: 2;
-        }
-
-        .hero-master-box {
             text-align: center;
-            max-width: 1100px;
         }
 
-        .hero-tagline {
-            font-size: 0.9rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 8px;
-            color: var(--accent);
-            margin-bottom: 30px;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
+        .hero-master-box { max-width: 1000px; padding: 0 20px; }
+        .hero-tagline { font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 6px; color: var(--accent); margin-bottom: 25px; display: block; }
+        
         .hero-viewport h1 {
             font-family: var(--font-serif);
-            font-size: 6.5rem;
+            font-size: 5.5rem;
             font-weight: 900;
-            line-height: 1.05;
+            line-height: 1.1;
             text-transform: uppercase;
-            letter-spacing: -1px;
-            margin-bottom: 35px;
-            opacity: 0;
-            transform: translateY(50px);
+            margin-bottom: 30px;
         }
 
         .hero-viewport h1 span {
             display: block;
-            background: linear-gradient(to right, #fff 30%, var(--text-muted) 100%);
+            background: linear-gradient(to right, #fff 40%, var(--text-muted) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .hero-desc {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto 50px;
-            line-height: 1.7;
-            font-weight: 300;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
+        .hero-desc { font-size: 1.2rem; color: var(--text-muted); max-width: 680px; margin: 0 auto 45px; line-height: 1.7; font-weight: 300; }
+        
         .premium-btn {
-            padding: 20px 45px;
+            padding: 18px 40px;
             background: transparent;
             color: var(--text-main);
             border: 1px solid rgba(255,255,255,0.2);
@@ -340,587 +295,212 @@
             font-size: 0.85rem;
             text-decoration: none;
             display: inline-block;
-            position: relative;
-            overflow: hidden;
-            transition: border-color 0.3s;
-            opacity: 0;
+            transition: all 0.3s;
+            cursor: pointer;
         }
 
-        .premium-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 100%;
-            background: var(--text-main);
-            z-index: -1;
-            transition: width 0.6s var(--curve-premium);
-        }
-
-        .premium-btn:hover {
-            color: #000;
-            border-color: var(--text-main);
-        }
-
-        .premium-btn:hover::before {
-            width: 100%;
-        }
+        .premium-btn:hover { background: #fff; color: #000; border-color: #fff; }
 
         /* ==========================================================================
-           6. CINEMATIC SHOWCASE / ABOUT (SCROLL REVEAL)
+           6. O NÁS / TEAM SECTION (FIXED FLEXBOX GRID)
            ========================================================================== */
+        .about-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+        }
+
         .showcase-grid {
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 40px;
-            align-items: center;
-        }
-
-        .showcase-text {
-            grid-column: 1 / 6;
-        }
-
-        .meta-num {
-            font-family: var(--font-serif);
-            font-size: 1.1rem;
-            color: var(--accent);
-            display: block;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .showcase-text h2 {
-            font-family: var(--font-serif);
-            font-size: 3.5rem;
-            text-transform: uppercase;
-            line-height: 1.15;
-            margin-bottom: 40px;
-        }
-
-        .showcase-p {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-            margin-bottom: 30px;
-            font-weight: 300;
-        }
-
-        .showcase-media {
-            grid-column: 6 / 13;
-            position: relative;
-            height: 680px;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.7);
-        }
-
-        .showcase-media img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scale(1.1);
-        }
-
-        .video-play-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background 0.4s;
-        }
-
-        .play-trigger-btn {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            transition: transform 0.5s var(--curve-premium), background-color 0.3s;
-            cursor: pointer;
-        }
-
-        .showcase-media:hover .play-trigger-btn {
-            transform: scale(1.1);
-            background: var(--accent);
-            color: #000;
-            border-color: var(--accent);
-        }
-
-        /* ==========================================================================
-           7. HORIZONTAL INFINITE SCROLL LOOPER (THE HORIZONTAL MODULE)
-           ========================================================================== */
-        .horizontal-section-trigger {
-            position: relative;
-            width: 100%;
-            background: #050507;
-        }
-
-        .horizontal-sticky-viewport {
-            display: flex;
-            flex-wrap: nowrap;
-            width: 300vw; /* 3 Full screens broad */
-            height: 100vh;
-            will-change: transform;
-        }
-
-        .horizontal-pane {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            padding: 0 10%;
-            flex-shrink: 0;
-        }
-
-        .pane-architecture {
-            display: grid;
-            grid-template-columns: 7fr 5fr;
+            grid-template-columns: 1fr 1fr;
             gap: 60px;
-            width: 100%;
             align-items: center;
         }
 
-        .pane-display {
-            height: 70vh;
+        .showcase-text p { font-size: 1.1rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 25px; font-weight: 300; }
+        
+        .showcase-media {
+            position: relative;
+            height: 500px;
             border-radius: 20px;
             overflow: hidden;
-            position: relative;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
         }
 
-        .pane-display img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            will-change: transform;
+        .showcase-media img { width: 100%; height: 100%; object-fit: cover; }
+        .video-play-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; }
+        
+        .play-trigger-btn {
+            width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3); color: #fff; display: flex; justify-content: center; align-items: center; font-size: 1.3rem; cursor: pointer; transition: all 0.3s;
         }
+        .showcase-media:hover .play-trigger-btn { transform: scale(1.1); background: var(--accent); color: #000; border-color: var(--accent); }
 
-        .pane-meta h3 {
-            font-family: var(--font-serif);
-            font-size: 3.2rem;
-            text-transform: uppercase;
-            margin-bottom: 25px;
-            line-height: 1.1;
-        }
-
-        .pane-meta p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            line-height: 1.7;
-            font-weight: 300;
-        }
-
-        /* ==========================================================================
-           8. DYNAMIC INTERACTIVE SERVICE CALCULATOR MODULE
-           ========================================================================== */
-        .calculator-box {
-            background: var(--bg-card);
-            border: 1px solid rgba(255,255,255,0.03);
-            border-radius: 32px;
-            padding: 60px;
-            margin-top: 60px;
-        }
-
-        .calc-grid {
+        /* Creators Grid */
+        .creators-grid {
             display: grid;
-            grid-template-columns: 7fr 5fr;
-            gap: 60px;
-        }
-
-        .calc-options-block h3 {
-            font-family: var(--font-serif);
-            font-size: 1.6rem;
-            text-transform: uppercase;
-            margin-bottom: 30px;
-            letter-spacing: 1px;
-        }
-
-        .calc-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-
-        .calc-card-option {
-            background: rgba(255,255,255,0.01);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 22px 30px;
-            border-radius: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s var(--curve-premium);
-            cursor: pointer;
-        }
-
-        .calc-card-option:hover {
-            background: rgba(255,255,255,0.03);
-            border-color: rgba(255,255,255,0.1);
-        }
-
-        .calc-card-option.is-selected {
-            border-color: var(--accent);
-            background: rgba(229, 193, 88, 0.04);
-        }
-
-        .opt-title {
-            font-weight: 700;
-            font-size: 1.05rem;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .opt-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .opt-price {
-            font-family: var(--font-serif);
-            font-weight: 700;
-            color: var(--accent);
-            font-size: 1.2rem;
-        }
-
-        /* Total Output Window */
-        .calc-sticky-output {
-            background: var(--bg-card-light);
-            border-radius: 24px;
-            padding: 45px;
-            height: fit-content;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border: 1px solid rgba(255,255,255,0.02);
-        }
-
-        .output-label {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .total-price-display {
-            font-family: var(--font-serif);
-            font-size: 4rem;
-            font-weight: 900;
-            color: #fff;
-            margin-bottom: 30px;
-        }
-
-        .total-price-display span {
-            font-size: 2rem;
-            color: var(--accent);
-            margin-left: 5px;
-        }
-
-        .calc-summary-list {
-            list-style: none;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding-top: 25px;
-            margin-bottom: 35px;
-        }
-
-        .calc-summary-item {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-        }
-
-        /* ==========================================================================
-           9. DUO CREATORS ARTISTIC CARDS (3D TILT EFFECT)
-           ========================================================================== */
-        .creators-flex {
-            display: flex;
+            grid-template-columns: 1fr 1fr;
             gap: 40px;
-            margin-top: 60px;
         }
 
         .art-card {
-            flex: 1;
             background: var(--bg-card);
-            border-radius: 28px;
-            padding: 45px;
+            border-radius: 24px;
+            padding: 40px;
             border: 1px solid rgba(255,255,255,0.02);
-            transform-style: preserve-3d;
-            transform: perspective(1000px);
-            will-change: transform;
+            transition: transform 0.3s var(--curve-premium);
         }
-
-        .art-card-frame {
-            width: 100%;
-            height: 460px;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 35px;
-            transform: translateZ(35px);
-            position: relative;
-        }
-
-        .art-card-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .art-card h3 {
-            font-family: var(--font-serif);
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            transform: translateZ(25px);
-        }
-
-        .art-card .role-badge {
-            color: var(--accent);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            font-weight: 700;
-            display: block;
-            margin-bottom: 25px;
-            transform: translateZ(20px);
-        }
-
-        .art-card p {
-            color: var(--text-muted);
-            line-height: 1.7;
-            font-size: 1.05rem;
-            font-weight: 300;
-            transform: translateZ(15px);
-        }
+        .art-card:hover { transform: translateY(-5px); }
+        .art-card-frame { width: 100%; height: 350px; border-radius: 14px; overflow: hidden; margin-bottom: 25px; }
+        .art-card-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .art-card h3 { font-family: var(--font-serif); font-size: 2rem; margin-bottom: 5px; }
+        .role-badge { color: var(--accent); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; font-weight: 700; display: block; margin-bottom: 20px; }
+        .art-card p { color: var(--text-muted); font-size: 1rem; font-weight: 300; }
 
         /* ==========================================================================
-           10. ULTRA INTUITIVE CONTACT ARCHITECTURE
+           7. PORTFÓLIO SECTION
            ========================================================================== */
-        .contact-layout {
+        .portfolio-grid {
             display: grid;
-            grid-template-columns: 5fr 7fr;
-            gap: 100px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
         }
 
-        .field-box {
+        .portfolio-item {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.02);
+            transition: all 0.3s;
+        }
+
+        .portfolio-img-box { height: 280px; overflow: hidden; position: relative; }
+        .portfolio-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .portfolio-item:hover .portfolio-img-box img { transform: scale(1.05); }
+        
+        .portfolio-meta-box { padding: 30px; }
+        .portfolio-meta-box h3 { font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 15px; text-transform: uppercase; }
+        .portfolio-meta-box p { color: var(--text-muted); font-size: 0.95rem; font-weight: 300; }
+
+        /* ==========================================================================
+           8. CENNÍK & INTERACTIVE CALCULATOR
+           ========================================================================== */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 7fr 5fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .calc-block-title { font-family: var(--font-serif); font-size: 1.4rem; text-transform: uppercase; margin-bottom: 25px; letter-spacing: 1px; }
+        .calc-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 40px; }
+        
+        .calc-card-option {
+            background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04); padding: 20px 25px; border-radius: 16px;
+            display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.3s;
+        }
+        .calc-card-option:hover { background: var(--bg-card-light); }
+        .calc-card-option.is-selected { border-color: var(--accent); background: rgba(229, 193, 88, 0.05); }
+
+        .opt-title { font-weight: 700; font-size: 1rem; display: block; margin-bottom: 4px; }
+        .opt-desc { font-size: 0.85rem; color: var(--text-muted); font-weight: 300; }
+        .opt-price { font-family: var(--font-serif); font-weight: 700; color: var(--accent); font-size: 1.15rem; margin-left: 15px; }
+
+        .calc-output-window {
+            background: var(--bg-card); border-radius: 24px; padding: 40px; border: 1px solid rgba(255,255,255,0.02);
+            position: sticky; top: 120px;
+        }
+        .output-label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 10px; display: block; }
+        .total-price-display { font-family: var(--font-serif); font-size: 3.5rem; font-weight: 900; color: #fff; margin-bottom: 25px; }
+        .total-price-display span { font-size: 1.8rem; color: var(--accent); margin-left: 3px; }
+        
+        .calc-summary-list { list-style: none; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; margin-bottom: 30px; }
+        .calc-summary-item { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px; }
+
+        /* ==========================================================================
+           9. REFERENCIE SECTION
+           ========================================================================== */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .review-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.02);
             position: relative;
-            margin-bottom: 50px;
         }
 
+        .review-icon { font-size: 2.5rem; color: rgba(229,193,88,0.1); position: absolute; top: 30px; right: 40px; }
+        .review-text { font-size: 1.1rem; color: var(--text-main); font-style: italic; margin-bottom: 30px; line-height: 1.7; font-weight: 300; }
+        
+        .review-author { display: flex; align-items: center; gap: 15px; }
+        .author-avatar { width: 50px; height: 50px; border-radius: 50%; background: #222; overflow: hidden; }
+        .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .author-info h4 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
+        .author-info span { font-size: 0.8rem; color: var(--accent); font-weight: 600; text-transform: uppercase; }
+
+        /* ==========================================================================
+           10. RESERVATION & CONTACT (CLEAN LAYOUT)
+           ========================================================================== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+        }
+
+        .field-box { position: relative; margin-bottom: 40px; }
         .field-input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 18px 0;
-            color: #fff;
-            font-size: 1.2rem;
-            font-family: var(--font-sans);
-            transition: border-color 0.4s var(--curve-premium);
+            width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 0; color: #fff; font-size: 1.1rem; font-family: var(--font-sans); transition: border-color 0.3s;
         }
-
-        .field-input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
+        .field-input:focus { outline: none; border-color: var(--accent); }
+        
         .field-label {
-            position: absolute;
-            top: 18px;
-            left: 0;
-            color: var(--text-dark);
-            pointer-events: none;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            transition: all 0.4s var(--curve-premium);
+            position: absolute; top: 15px; left: 0; color: var(--text-dark); pointer-events: none;
+            font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; transition: all 0.3s var(--curve-premium);
         }
+        .field-input:focus ~ .field-label, .field-input:valid ~ .field-label { top: -20px; font-size: 0.75rem; color: var(--accent); }
 
-        .field-input:focus ~ .field-label,
-        .field-input:valid ~ .field-label {
-            top: -22px;
-            font-size: 0.75rem;
-            color: var(--accent);
-            letter-spacing: 3px;
+        .submit-btn {
+            background: transparent; border: 1px solid var(--accent); color: #fff; padding: 20px 50px;
+            border-radius: 50px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem;
+            cursor: pointer; transition: all 0.3s; width: 100%; text-align: center;
         }
+        .submit-btn:hover { background: var(--accent); color: #000; }
 
-        .field-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 2px;
-            width: 0%;
-            background: linear-gradient(90deg, var(--accent), var(--accent-bright));
-            transition: width 0.5s var(--curve-premium);
-        }
-
-        .field-input:focus ~ .field-bar {
-            width: 100%;
-        }
-
-        .submit-engine-btn {
-            background: transparent;
-            border: 1px solid var(--accent);
-            color: #fff;
-            padding: 22px 60px;
-            border-radius: 50px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: color 0.4s;
-        }
-
-        .submit-engine-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 100%;
-            background: var(--accent);
-            z-index: -1;
-            transition: width 0.5s var(--curve-premium);
-        }
-
-        .submit-engine-btn:hover {
-            color: #000;
-        }
-
-        .submit-engine-btn:hover::before {
-            width: 100%;
-        }
+        .info-link { display: flex; align-items: center; gap: 20px; text-decoration: none; color: var(--text-main); margin-bottom: 30px; }
+        .info-icon { width: 50px; height: 50px; border-radius: 50%; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: center; align-items: center; color: var(--accent); font-size: 1.1rem; }
+        .info-text span { display: block; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; }
+        .info-text p { font-size: 1.1rem; font-weight: 600; }
 
         /* ==========================================================================
-           11. MODAL IMMERSIVE VIDEO OVERLAY
+           11. MODAL & FOOTER
            ========================================================================== */
-        .video-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0,0,0,0.95);
-            z-index: 10000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.6s ease;
-        }
+        .video-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.95); z-index: 10000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.5s; }
+        .video-modal.is-active { opacity: 1; pointer-events: auto; }
+        .modal-container { width: 80%; max-width: 1000px; aspect-ratio: 16/9; position: relative; }
+        .modal-container iframe { width: 100%; height: 100%; border: none; }
+        .modal-close { position: absolute; top: -40px; right: 0; background: transparent; border: none; color: #fff; font-size: 1.1rem; cursor: pointer; }
 
-        .video-modal.is-active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-container {
-            width: 80%;
-            max-width: 1200px;
-            aspect-ratio: 16/9;
-            background: #000;
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .modal-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: -50px;
-            right: 0;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
+        footer { padding: 60px 0; border-top: 1px solid rgba(255,255,255,0.03); background: #040406; text-align: center; }
+        .footer-flex { display: flex; justify-content: space-between; align-items: center; }
+        .social-cluster { display: flex; gap: 20px; }
+        .social-cluster a { color: var(--text-muted); font-size: 1.2rem; transition: color 0.3s; }
+        .social-cluster a:hover { color: var(--accent); }
 
         /* ==========================================================================
-           12. FOOTER SYSTEM
+           12. RIGID RESPONSIVE SYSTEM
            ========================================================================== */
-        footer {
-            padding: 80px 0;
-            border-top: 1px solid rgba(255,255,255,0.03);
-            background: #040406;
-        }
-
-        .footer-architecture {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-copy {
-            font-size: 0.9rem;
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-
-        .social-cluster {
-            display: flex;
-            gap: 25px;
-        }
-
-        .social-cluster a {
-            color: var(--text-muted);
-            font-size: 1.3rem;
-            transition: color 0.3s;
-        }
-
-        .social-cluster a:hover {
-            color: var(--accent);
-        }
-
-        /* ==========================================================================
-           13. COMPLEX RESPONSIVE RECONSTRUCTION LAYER
-           ========================================================================== */
-        @media (max-width: 1200px) {
-            .hero-viewport h1 { font-size: 4.5rem; }
-            .showcase-grid, .pane-architecture, .calc-grid, .contact-layout { grid-template-columns: 1fr; }
-            .showcase-text, .showcase-media, .pane-display, .pane-meta { grid-column: auto; }
-            .showcase-media { height: 450px; }
-            .horizontal-sticky-viewport { display: block; width: auto; height: auto; }
-            .horizontal-pane { width: auto; height: auto; padding: 100px 10%; }
-            .pane-display { height: 50vh; }
-            .creators-flex { flex-direction: column; }
-        }
-
-        @media (max-width: 768px) {
-            .hero-viewport h1 { font-size: 3.2rem; }
-            header { padding: 25px 30px; }
-            .brand-logo { font-size: 1.2rem; }
-            .menu-nav-link { font-size: 2.5rem; }
-            .container { padding: 0 6%; }
-            .calc-box { padding: 30px; }
-            .total-price-display { font-size: 2.8rem; }
+        @media (max-width: 1024px) {
+            .showcase-grid, .creators-grid, .portfolio-grid, .calc-grid, .reviews-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+            .calc-output-window { position: static; }
+            .footer-flex { flex-direction: column; gap: 20px; }
+            .hero-viewport h1 { font-size: 3.8rem; }
+            .section-title { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -929,230 +509,290 @@
     <canvas id="bg-canvas"></canvas>
     <div class="vignette"></div>
 
+    <!-- PRELOADER -->
     <div class="ultra-preloader" id="preloader">
         <div class="loader-context">
             <div class="loader-title">VISUAL STORIES</div>
-            <div class="loader-track">
-                <div class="loader-bar" id="loader-bar"></div>
-            </div>
+            <div class="loader-track"><div class="loader-bar" id="loader-bar"></div></div>
             <div class="loader-number" id="loader-number">0%</div>
         </div>
     </div>
 
-    <header id="app-header">
+    <!-- HEADER -->
+    <header>
         <a href="#" class="brand-logo">Visual<span>Stories</span></a>
-        <button class="menu-trigger" id="menu-btn" aria-label="Toggle Navigation Menu">
+        <button class="menu-trigger" id="menu-btn" aria-label="Menu">
             <span></span>
             <span></span>
         </button>
     </header>
 
+    <!-- NAVIGATION OVERLAY -->
     <div class="fullscreen-menu" id="menu-overlay">
         <ul class="menu-nav-list">
             <li class="menu-nav-item"><a href="#" class="menu-nav-link"><span>01</span>Domov</a></li>
             <li class="menu-nav-item"><a href="#about" class="menu-nav-link"><span>02</span>O Nás</a></li>
             <li class="menu-nav-item"><a href="#portfolio" class="menu-nav-link"><span>03</span>Portfólio</a></li>
-            <li class="menu-nav-item"><a href="#calculator" class="menu-nav-link"><span>04</span>Kalkulačka</a></li>
-            <li class="menu-nav-item"><a href="#team" class="menu-nav-link"><span>05</span>Tím</a></li>
-            <li class="menu-nav-item"><a href="#contact" class="menu-nav-link"><span>06</span>Kontakt</a></li>
+            <li class="menu-nav-item"><a href="#cennik" class="menu-nav-link"><span>04</span>Cenník</a></li>
+            <li class="menu-nav-item"><a href="#referencie" class="menu-nav-link"><span>05</span>Referencie</a></li>
+            <li class="menu-nav-item"><a href="#rezervacia" class="menu-nav-link"><span>06</span>Nezáväzná rezervácia</a></li>
+            <li class="menu-nav-item"><a href="#kontakt" class="menu-nav-link"><span>07</span>Kontakt</a></li>
         </ul>
     </div>
 
+    <!-- HERO SECTION -->
     <section class="hero-viewport">
         <div class="hero-master-box">
-            <span class="hero-tagline" id="hero-tag">Cinematic Portfolio Engine</span>
-            <h1 id="hero-title"><span>Zachytené</span><span>Umelecké Emócie</span></h1>
-            <p class="hero-desc" id="hero-desc">Sme zohrané autorské duo. Spájame dynamický filmový strih a nadčasovú momentkovú fotografiu do jedného prémiového vizuálneho celku.</p>
-            <a href="#about" class="premium-btn" id="hero-btn">Vstúpiť do príbehu</a>
+            <span class="hero-tagline">Cinematic Production Duo</span>
+            <h1><span>Zachytené</span><span>Umelecké Emócie</span></h1>
+            <p class="hero-desc">Spájame dynamický filmový strih a nadčasovú reportážnu fotografiu do jedného prémiového vizuálneho príbehu.</p>
+            <a href="#about" class="premium-btn">Spoznajte našu tvorbu</a>
         </div>
     </section>
 
+    <!-- O NÁS SEKCIA -->
     <section class="container section-spacer" id="about">
-        <div class="showcase-grid">
-            <div class="showcase-text">
-                <span class="meta-num">01 // FILMOVÁ ESTETIKA</span>
-                <h2>Sme rozprávači vašich dôležitých okamihov</h2>
-                <p class="showcase-p">Nehľadajte u nás strojené pózovanie. Splývame s hosťami na stužkových slávnostiach aj svadbách, vďaka čomu zachytávame čistú esenciu radosti, slzy dojatia a momenty, ktoré by inak zanikli.</p>
-                <p class="showcase-p">Pracujeme s najmodernejšou optikou a custom farebným gradingom, vďaka čomu naše videá a fotky vyzerajú ako skutočné plátna kín.</p>
+        <div class="about-layout">
+            <div class="showcase-grid">
+                <div class="showcase-text">
+                    <span class="meta-num">01 // AUTORSKÁ FILMOVOSTŤ</span>
+                    <h2 class="section-title">Sme rozprávači vašich okamihov</h2>
+                    <p>Nehľadajte u nás strojené pózovanie. Splývame s prostredím, vďaka čomu zachytávame čistú esenciu emócií, úprimný smiech a momenty, ktoré by inak zanikli.</p>
+                    <p>Pracujeme s najmodernejšou optikou a vlastným farebným gradingom, vďaka čomu naše videá a fotografie vyzerajú ako vystrihnuté z kinofilmu.</p>
+                </div>
+                <div class="showcase-media">
+                    <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1200" alt="Kamera v akcii">
+                    <div class="video-play-overlay">
+                        <button class="play-trigger-btn" id="open-video" aria-label="Prehrať showreel"><i class="fas fa-play"></i></button>
+                    </div>
+                </div>
             </div>
-            <div class="showcase-media" id="about-media-trigger">
-                <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1200" alt="Filmová kamera v akcii" id="about-img">
-                <div class="video-play-overlay">
-                    <button class="play-trigger-btn" id="open-video" aria-label="Prehrať showreel"><i class="fas fa-play"></i></button>
+
+            <!-- Tímoví tvorcovia -->
+            <div class="creators-grid">
+                <div class="art-card">
+                    <div class="art-card-frame">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600" alt="Peter">
+                    </div>
+                    <span class="role-badge">Director of Photography</span>
+                    <h3>Peter</h3>
+                    <p>Zodpovedám za kameru, tempo filmu a precízny sound design. Každé video strihám individuálne tak, aby odrážalo jedinečnú energiu vašej udalosti.</p>
+                </div>
+                <div class="art-card">
+                    <div class="art-card-frame">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600" alt="Veronika">
+                    </div>
+                    <span class="role-badge">Lead Photographer</span>
+                    <h3>Veronika</h3>
+                    <p>Zameriavam sa na momentky, prácu s prirodzeným svetlom a detaily. Moje fotografie sú charakteristické svojou čistotou a úprimnosťou.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="horizontal-section-trigger" id="portfolio">
-        <div class="horizontal-sticky-viewport" id="horizontal-wrapper">
-            
-            <div class="horizontal-pane">
-                <div class="pane-architecture">
-                    <div class="pane-display">
-                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200" alt="Svadobný editoriál">
-                    </div>
-                    <div class="pane-meta">
-                        <span class="meta-num">// PREMIUM WEDDING</span>
-                        <h3>Viktória & Jakub</h3>
-                        <p>Komplexný vizuálny set z trojdňovej svadobnej udalosti v historickom kaštieli. Výstup kombinuje romantický cinematic film s divokou reportážnou afterparty fotografiou.</p>
-                    </div>
+    <!-- PORTFÓLIO SEKCIA -->
+    <section class="container section-spacer" id="portfolio">
+        <span class="meta-num">02 // UKÁŽKY PRÁCE</span>
+        <h2 class="section-title">Vybrané príbehy</h2>
+        <p class="section-desc">Každá svadba, stužková slávnosť alebo umelecký projekt má svoju vlastnú vizuálnu identitu.</p>
+
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <div class="portfolio-img-box"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600" alt="Svadba"></div>
+                <div class="portfolio-meta-box">
+                    <span class="meta-num">// WEDDING</span>
+                    <h3>Viktória & Jakub</h3>
+                    <p>Elegantný príbeh z prostredia historického kaštieľa kombinujúci romantický tón s divokou večernou párty.</p>
                 </div>
             </div>
-
-            <div class="horizontal-pane">
-                <div class="pane-architecture">
-                    <div class="pane-display">
-                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200" alt="Gala stužková">
-                    </div>
-                    <div class="pane-meta">
-                        <span class="meta-num">// GALA SLÁVNOSŤ</span>
-                        <h3>Gymnázium Trieda IV.B</h3>
-                        <p>Nespútaná študentská energia zachytená z dvoch kamier a dronu. Na stužkových vytvárame dynamické, hudobne podfarbené klipy, ktoré majú neuveriteľný spád.</p>
-                    </div>
+            <div class="portfolio-item">
+                <div class="portfolio-img-box"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=600" alt="Stužková"></div>
+                <div class="portfolio-meta-box">
+                    <span class="meta-num">// GALA</span>
+                    <h3>Gymnázium IV.B</h3>
+                    <p>Dynamický, hudobne podfarbený klip a kompletný fotoreport nabitý mladíckou energiou a emóciami.</p>
                 </div>
             </div>
-
-            <div class="horizontal-pane">
-                <div class="pane-architecture">
-                    <div class="pane-display">
-                        <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=1200" alt="Nočný editoriál">
-                    </div>
-                    <div class="pane-meta">
-                        <span class="meta-num">// EDITORIAL ATMOSPHERE</span>
-                        <h3>Neon & Hmla</h3>
-                        <p>Nočný umelecký experiment s modelmi pracujúci s externými svetelnými zdrojmi, atmosférickým dymom a odrazmi mestského prostredia.</p>
-                    </div>
+            <div class="portfolio-item">
+                <div class="portfolio-img-box"><img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=600" alt="Editoriál"></div>
+                <div class="portfolio-meta-box">
+                    <span class="meta-num">// EDITORIAL</span>
+                    <h3>Neon & Atmosféra</h3>
+                    <p>Nočný umelecký fotoprojekt experimentujúci s externým svetlom, dymom a odrazmi mesta.</p>
                 </div>
             </div>
-
         </div>
-    </div>
+    </section>
 
-    <section class="container section-spacer" id="calculator">
-        <span class="meta-num">02 // TRANSPARENTNOSŤ</span>
-        <h2 class="section-title">Nakonfigurujte si rozpočet</h2>
-        <p class="showcase-p" style="max-width: 600px;">Zvoľte si základný balík služieb a doplňte ho o voliteľné moduly. Systém okamžite prepočíta predbežnú cenovú kalkuláciu.</p>
+    <!-- CENNÍK SEKCIA -->
+    <section class="container section-spacer" id="cennik">
+        <span class="meta-num">03 // TRANSPARENTNOSŤ</span>
+        <h2 class="section-title">Interaktívny cenník</h2>
+        <p class="section-desc">Zvoľte si hlavný balík služieb a doplňte ho o voliteľné moduly. Systém automaticky vypočíta odhadovaný rozpočet.</p>
 
-        <div class="calculator-box">
-            <div class="calc-grid">
+        <div class="calc-grid">
+            <div class="calc-inputs">
+                <h3 class="calc-block-title">1. Základný balík</h3>
+                <div class="calc-group">
+                    <div class="calc-card-option is-selected" data-type="main" data-price="900">
+                        <div>
+                            <span class="opt-title">Svadobná Produkcia Premium</span>
+                            <span class="opt-desc">Foto + Video od príprav až po čepčenie (cca 14 hodín na mieste)</span>
+                        </div>
+                        <div class="opt-price">900€</div>
+                    </div>
+                    <div class="calc-card-option" data-type="main" data-price="700">
+                        <div>
+                            <span class="opt-title">Stužková Slávnosť Kompletná</span>
+                            <span class="opt-desc">Záznam celej oficiálnej časti, tance, klip a odovzdanie fotogalérie</span>
+                        </div>
+                        <div class="opt-price">700€</div>
+                    </div>
+                </div>
+
+                <h3 class="calc-block-title">2. Voliteľné doplnky</h3>
+                <div class="calc-group">
+                    <div class="calc-card-option" data-type="addon" data-price="150">
+                        <div>
+                            <span class="opt-title">Zábery z dronu (4K Cinema)</span>
+                            <span class="opt-desc">Letecké perspektívy lokality zakomponované do výsledného filmu</span>
+                        </div>
+                        <div class="opt-price">+150€</div>
+                    </div>
+                    <div class="calc-card-option" data-type="addon" data-price="200">
+                        <div>
+                            <span class="opt-title">Expresné dodanie materiálu</span>
+                            <span class="opt-desc">Spracovanie a odovzdanie kompletnej zákazky už do 7 dní</span>
+                        </div>
+                        <div class="opt-price">+200€</div>
+                    </div>
+                    <div class="calc-card-option" data-type="addon" data-price="100">
+                        <div>
+                            <span class="opt-title">Exkluzívna tlačená fotokniha</span>
+                            <span class="opt-desc">Ručne viazaná kniha v luxusnom dizajnovom obale</span>
+                        </div>
+                        <div class="opt-price">+100€</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calc-output-window">
+                <span class="output-label">Odhadovaná cena</span>
+                <div class="total-price-display" id="total-price-val">900<span>€</span></div>
+                <ul class="calc-summary-list" id="summary-items-zone"></ul>
+                <a href="#rezervacia" class="premium-btn" style="width: 100%; text-align: center; background: var(--accent); color: #000; border: none;">Prejsť k rezervácii</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- REFERENCIE SEKCIA -->
+    <section class="container section-spacer" id="referencie">
+        <span class="meta-num">04 // SKÚSENOSTI KLIENTOV</span>
+        <h2 class="section-title">Čo o nás hovoria</h2>
+        <p class="section-desc">Najväčšou odmenou je pre nás spokojnosť ľudí, ktorí nám zverili svoje najdôležitejšie životné príbehy.</p>
+
+        <div class="reviews-grid">
+            <div class="review-card">
+                <i class="fas fa-quote-right review-icon"></i>
+                <p class="review-text">"Veronika a Peter boli úžasní. Na svadbe sme o nich takmer nevedeli, no výsledné fotky a film nám vyrazili dych. Úplne presne zachytili atmosféru dňa."</p>
+                <div class="review-author">
+                    <div class="author-avatar"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=150" alt="Manželia"></div>
+                    <div class="author-info">
+                        <h4>Simona & Tomáš</h4>
+                        <span>Svadba, Kaštieľ Belá</span>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card">
+                <i class="fas fa-quote-right review-icon"></i>
+                <p class="review-text">"Video zo stužkovej malo obrovský úspech u celej triedy aj u rodičov. Je dynamické, moderné a výber hudby bol dokonalý. Určite odporúčame!"</p>
+                <div class="review-author">
+                    <div class="author-avatar"><img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150" alt="Študent"></div>
+                    <div class="author-info">
+                        <h4>Marek H. (zástupca triedy)</h4>
+                        <span>Stužková Slávnosť, GJAR</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEZÁVÄZNÁ REZERVÁCIA SEKCIA -->
+    <section class="container section-spacer" id="rezervacia">
+        <div class="contact-grid">
+            <div>
+                <span class="meta-num">05 // REZERVAČNÝ SYSTÉM</span>
+                <h2 class="section-title">Nezáväzná rezervácia</h2>
+                <p class="section-desc" style="margin-bottom: 30px;">Pošlite nám detaily o vašom plánovanom dni. Zvolený balík z cenníka bol automaticky priložený k tejto žiadosti.</p>
                 
-                <div class="calc-options-block">
-                    <h3>1. Hlavná Služba</h3>
-                    <div class="calc-group">
-                        <div class="calc-card-option is-selected" data-type="main" data-price="900" id="opt-base-wedding">
-                            <div>
-                                <span class="opt-title">Kompletná Svadobná Produkcia</span>
-                                <span class="opt-desc">Foto + Video od príprav až po čepčenie (cca 14 hodín na mieste)</span>
-                            </div>
-                            <div class="opt-price">900€</div>
-                        </div>
-                        <div class="calc-card-option" data-type="main" data-price="700" id="opt-base-gala">
-                            <div>
-                                <span class="opt-title">Stužková Slávnosť Premium</span>
-                                <span class="opt-desc">Záznam celej oficiálnej časti, tance, klip a kompletný fotoreport</span>
-                            </div>
-                            <div class="opt-price">700€</div>
-                        </div>
-                    </div>
-
-                    <h3>2. Exkluzívne Doplnky</h3>
-                    <div class="calc-group">
-                        <div class="calc-card-option" data-type="addon" data-price="150">
-                            <div>
-                                <span class="opt-title">Zábery z Dronu (4K Cinema)</span>
-                                <span class="opt-desc">Letecké kompozície miesta a portrétov podliehajúce licenciám</span>
-                            </div>
-                            <div class="opt-price">+150€</div>
-                        </div>
-                        <div class="calc-card-option" data-type="addon" data-price="200">
-                            <div>
-                                <span class="opt-title">Expresné Dodanie do 7 dní</span>
-                                <span class="opt-desc">Prednostné spracovanie a dodanie krátkeho klipu do 48 hodín</span>
-                            </div>
-                            <div class="opt-price">+200€</div>
-                        </div>
-                        <div class="calc-card-option" data-type="addon" data-price="100">
-                            <div>
-                                <span class="opt-title">Tlačená Premium Fotokniha</span>
-                                <span class="opt-desc">Exkluzívna ručná väzba v luxusnom dizajnovom obale</span>
-                            </div>
-                            <div class="opt-price">+100€</div>
-                        </div>
-                    </div>
+                <div style="background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.03);">
+                    <span class="output-label" style="margin-bottom: 5px;">Zvolená konfigurácia:</span>
+                    <div id="form-selected-package" style="font-weight: 700; color: var(--accent); margin-bottom: 10px;">Svadobná Produkcia Premium</div>
+                    <div id="form-selected-price" style="font-size: 1.3rem; font-weight: 800;">Cena: 900€</div>
                 </div>
-
-                <div class="calc-sticky-output">
-                    <div>
-                        <span class="output-label">Odhadovaná Cena</span>
-                        <div class="total-price-display" id="total-price-val">900<span>€</span></div>
-                    </div>
-                    <div>
-                        <ul class="calc-summary-list" id="summary-items-zone">
-                            </ul>
-                        <a href="#contact" class="premium-btn noborder" style="background: var(--accent); color: #000; text-align: center; width: 100%;">Rezervovať tento balík</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section class="container section-spacer" id="team">
-        <span class="meta-num">03 // AUTORSKÉ DUO</span>
-        <h2 class="section-title">Tvorcovia vizuálneho konceptu</h2>
-        
-        <div class="creators-flex">
-            <div class="art-card" data-tilt-element>
-                <div class="art-card-frame">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600" alt="Peter">
-                </div>
-                <span class="role-badge">Director of Photography</span>
-                <h3>Peter</h3>
-                <p>Zodpovedám za zachytenie tempa, dynamiky pohybu a komplexný sound design. Každý film strihám a farbím individuálne, aby som docielil jedinečnú atmosféru zodpovedajúcu vašej energii.</p>
-            </div>
-
-            <div class="art-card" data-tilt-element>
-                <div class="art-card-frame">
-                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600" alt="Veronika">
-                </div>
-                <span class="role-badge">Lead Photographer</span>
-                <h3>Veronika</h3>
-                <p>Zameriavam sa na prácu s prirodzeným svetlom, emóciami a skrytými detailmi. Moje fotografie sú charakteristické svojou svetlosťou, hĺbkou ostrosti a nadčasovou čistotou formy.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="container section-spacer" id="contact">
-        <div class="contact-layout">
-            <div>
-                <span class="meta-num">04 // REZERVÁCIE</span>
-                <h2 class="section-title">Napíšte nám o vašom dni</h2>
-                <p class="showcase-p">Prijímame obmedzený počet objednávok na sezónu, aby sme každej svadbe a stužkovej dokázali venovať 100% našej kreatívnej kapacity. Ozvite sa nám čo najskôr.</p>
             </div>
             <div>
-                <form id="contact-form-element" autocomplete="off" onsubmit="event.preventDefault(); alert('Ďakujeme! Vaša správa bola bezpečne odoslaná.');">
+                <form id="reservation-form" autocomplete="off" onsubmit="event.preventDefault(); alert('Vaša nezáväzná rezervácia bola úspešne odoslaná. Budeme vás kontaktovať v priebehu 24 hodín.');">
                     <div class="field-box">
-                        <input type="text" class="field-input" required id="form-name">
-                        <label class="field-label">Vaše meno / Názov školy</label>
-                        <div class="field-bar"></div>
+                        <input type="text" class="field-input" required>
+                        <label class="field-label">Meno a priezvisko / Škola</label>
                     </div>
                     <div class="field-box">
-                        <input type="email" class="field-input" required id="form-email">
+                        <input type="email" class="field-input" required>
                         <label class="field-label">Kontaktný E-mail</label>
-                        <div class="field-bar"></div>
                     </div>
                     <div class="field-box">
-                        <input type="text" class="field-input" required id="form-meta">
-                        <label class="field-label">Termín & Miesto udalosti</label>
-                        <div class="field-bar"></div>
+                        <input type="text" class="field-input" required>
+                        <label class="field-label">Predbežný termín a miesto</label>
                     </div>
-                    <button class="submit-engine-btn" type="submit">Odoslať dopyt</button>
+                    <button class="submit-btn" type="submit">Odoslať nezáväzný dopyt</button>
                 </form>
             </div>
         </div>
     </section>
 
+    <!-- KONTAKT SEKCIA -->
+    <section class="container section-spacer" id="kontakt">
+        <span class="meta-num">06 // KONTTAKTNÉ INFORMÁCIE</span>
+        <h2 class="section-title">Spojme sa</h2>
+        <p class="section-desc">Máte špecifické otázky alebo si chcete dohodnúť osobné / online stretnutie? Sme tu pre vás.</p>
+
+        <div class="contact-grid">
+            <div>
+                <a href="mailto:info@visualstories.sk" class="info-link">
+                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="info-text">
+                        <span>Napíšte nám</span>
+                        <p>info@visualstories.sk</p>
+                    </div>
+                </a>
+                <a href="tel:+421900123456" class="info-link">
+                    <div class="info-icon"><i class="fas fa-phone"></i></div>
+                    <div class="info-text">
+                        <span>Zatelefonujte nám</span>
+                        <p>+421 900 123 456</p>
+                    </div>
+                </a>
+                <div class="info-link">
+                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="info-text">
+                        <span>Pôsobiskom</span>
+                        <p>Celé Slovensko / Stredná Európa</p>
+                    </div>
+                </div>
+            </div>
+            <div style="background: var(--bg-card); padding: 40px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.02); display: flex; flex-direction: column; justify-content: center;">
+                <h4 style="font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 15px;">Dostupnosť termínov</h4>
+                <p style="color: var(--text-muted); font-weight: 300; margin-bottom: 20px;">S cieľom zachovať maximálnu prémiovú kvalitu spracovania prijímame len limitovaný počet projektov ročne. Rezervujte si svoj termín včas.</p>
+                <div style="display: flex; align-items: center; gap: 10px; color: #52a447; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
+                    <span style="width: 10px; height: 10px; background: #52a447; border-radius: 50%; display: inline-block;"></span>
+                    Prijímame objednávky na aktuálnu sezónu
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMMERSIVE VIDEO MODAL -->
     <div class="video-modal" id="video-modal-view">
         <div class="modal-container">
             <button class="modal-close" id="close-video"><i class="fas fa-times"></i> Zatvoriť</button>
@@ -1160,23 +800,24 @@
         </div>
     </div>
 
+    <!-- FOOTER -->
     <footer>
-        <div class="container footer-architecture">
-            <div class="footer-copy">&copy; 2026 VisualStories. Crafted for premium digital experience.</div>
+        <div class="container footer-flex">
+            <div style="color: var(--text-dark); font-size: 0.9rem;">&copy; 2026 VisualStories. Všetky práva vyhradené.</div>
             <div class="social-cluster">
-                <a href="#" aria-label="Instagram Profile"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="Vimeo Video Profile"><i class="fab fa-vimeo-v"></i></a>
-                <a href="#" aria-label="Facebook Profile"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Vimeo"><i class="fab fa-vimeo-v"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
             </div>
         </div>
     </footer>
 
+    <!-- INTERACTION PLATFORM ENGINES -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <script>
         /* ==========================================================================
-           MODULO I: ASYNC PRELOADER ENGINE
+           1. PRELOADER LOGIC
            ========================================================================== */
         window.addEventListener('DOMContentLoaded', () => {
             const bar = document.getElementById('loader-bar');
@@ -1184,135 +825,80 @@
             const preloader = document.getElementById('preloader');
             
             let progress = 0;
-            const engineInterval = setInterval(() => {
-                progress += Math.floor(Math.random() * 12) + 4;
+            const preloaderInterval = setInterval(() => {
+                progress += Math.floor(Math.random() * 15) + 5;
                 if(progress >= 100) {
                     progress = 100;
-                    clearInterval(engineInterval);
+                    clearInterval(preloaderInterval);
                     
                     gsap.to(preloader, {
                         yPercent: -100,
-                        duration: 1.2,
+                        duration: 1,
                         ease: 'power4.inOut',
-                        onComplete: () => {
-                            preloader.style.display = 'none';
-                            executeScrollAnimations();
-                        }
+                        onComplete: () => preloader.style.display = 'none'
                     });
                 }
                 bar.style.width = progress + '%';
                 num.innerText = progress + '%';
-            }, 60);
+            }, 50);
         });
 
         /* ==========================================================================
-           MODULO II: HTML5 HIGH-PERFORMANCE PARTICLES pozadie
+           2. HTML5 CANVAS BACKGROUND PARTICLES
            ========================================================================== */
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
-        
-        let w, h;
+        let w = canvas.width = window.innerWidth;
+        let h = canvas.height = window.innerHeight;
         const particleArray = [];
-        const mousePointer = { x: null, y: null, radius: 150 };
 
-        function initCanvasDimensions() {
+        window.addEventListener('resize', () => {
             w = canvas.width = window.innerWidth;
             h = canvas.height = window.innerHeight;
-        }
-        initCanvasDimensions();
-        window.addEventListener('resize', initCanvasDimensions);
-
-        window.addEventListener('mousemove', (e) => {
-            mousePointer.x = e.clientX;
-            mousePointer.y = e.clientY;
         });
 
-        window.addEventListener('mouseleave', () => {
-            mousePointer.x = null;
-            mousePointer.y = null;
-        });
-
-        class KineticParticle {
+        class Particle {
             constructor() {
                 this.x = Math.random() * w;
                 this.y = Math.random() * h;
-                this.size = Math.random() * 2 + 0.5;
-                this.baseX = this.x;
-                this.baseY = this.y;
-                this.density = (Math.random() * 30) + 10;
-                this.opacity = Math.random() * 0.4 + 0.1;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = Math.random() * 0.2 - 0.1;
+                this.speedY = Math.random() * 0.2 - 0.1;
+                this.opacity = Math.random() * 0.3 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > w) this.speedX *= -1;
+                if (this.y < 0 || this.y > h) this.speedY *= -1;
             }
             draw() {
                 ctx.fillStyle = `rgba(229, 193, 88, ${this.opacity})`;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.closePath();
                 ctx.fill();
             }
-            update() {
-                if (mousePointer.x != null) {
-                    let dx = mousePointer.x - this.x;
-                    let dy = mousePointer.y - this.y;
-                    let distance = Math.hypot(dx, dy);
-                    if (distance < mousePointer.radius) {
-                        let force = (mousePointer.radius - distance) / mousePointer.radius;
-                        let directionX = (dx / distance) * force * this.density;
-                        let directionY = (dy / distance) * force * this.density;
-                        this.x -= directionX;
-                        this.y -= directionY;
-                    } else {
-                        if (this.x !== this.baseX) {
-                            let dx = this.x - this.baseX;
-                            this.x -= dx / 15;
-                        }
-                        if (this.y !== this.baseY) {
-                            let dy = this.y - this.baseY;
-                            this.y -= dy / 15;
-                        }
-                    }
-                } else {
-                    if (this.x !== this.baseX) {
-                        let dx = this.x - this.baseX;
-                        this.x -= dx / 15;
-                    }
-                    if (this.y !== this.baseY) {
-                        let dy = this.y - this.baseY;
-                        this.y -= dy / 15;
-                    }
-                }
-            }
         }
 
-        function populateParticles() {
-            const densityValue = Math.floor((w * h) / 9000);
-            for(let i = 0; i < densityValue; i++) {
-                particleArray.push(new KineticParticle());
-            }
-        }
-        populateParticles();
-
-        function loopCanvasBackground() {
+        for (let i = 0; i < 60; i++) { particleArray.push(new Particle()); }
+        function animateParticles() {
             ctx.clearRect(0, 0, w, h);
-            for(let i = 0; i < particleArray.length; i++) {
-                particleArray[i].update();
-                particleArray[i].draw();
-            }
-            requestAnimationFrame(loopCanvasBackground);
+            particleArray.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
         }
-        loopCanvasBackground();
+        animateParticles();
 
         /* ==========================================================================
-           MODULO III: FULLSCREEN MENU SWITCH SYSTEM
+           3. OVERLAY MENU SYSTEM
            ========================================================================== */
         const trigger = document.getElementById('menu-btn');
-        const menuLayer = document.getElementById('menu-overlay');
-        
+        const overlay = document.getElementById('menu-overlay');
+
         trigger.addEventListener('click', () => {
-            menuLayer.classList.toggle('is-open');
-            if(menuLayer.classList.contains('is-open')) {
+            overlay.classList.toggle('is-open');
+            if(overlay.classList.contains('is-open')) {
                 trigger.children[0].style.transform = 'rotate(45deg) translate(7px, 7px)';
                 trigger.children[1].style.transform = 'rotate(-45deg) translate(7px, -7px)';
-                gsap.fromTo('.menu-nav-link', {y: 80, opacity: 0}, {y: 0, opacity: 1, duration: 0.5, ease: 'power3.out', stagger: 0.08, delay: 0.2});
             } else {
                 trigger.children[0].style.transform = 'none';
                 trigger.children[1].style.transform = 'none';
@@ -1321,28 +907,39 @@
 
         document.querySelectorAll('.menu-nav-link').forEach(link => {
             link.addEventListener('click', () => {
-                menuLayer.classList.remove('is-open');
+                overlay.classList.remove('is-open');
                 trigger.children[0].style.transform = 'none';
                 trigger.children[1].style.transform = 'none';
             });
         });
 
         /* ==========================================================================
-           MODULO IV: INTERACTIVE PACKAGES CALCULATOR LOGIC
+           4. CALCULATOR & RESERVATION BRIDGE LOGIC
            ========================================================================== */
-        const optionCards = document.querySelectorAll('.calc-card-option');
-        const totalPriceZone = document.getElementById('total-price-val');
+        const options = document.querySelectorAll('.calc-card-option');
+        const totalDisplay = document.getElementById('total-price-val');
         const summaryZone = document.getElementById('summary-items-zone');
+        
+        const formPackageText = document.getElementById('form-selected-package');
+        const formPriceText = document.getElementById('form-selected-price');
 
-        function recalculateSystemBudget() {
+        function updateCalculator() {
             let total = 0;
+            let selectedMainTitle = "";
+            let selectedAddonsList = [];
             summaryZone.innerHTML = '';
 
-            optionCards.forEach(card => {
-                if(card.classList.contains('is-selected')) {
-                    const price = parseInt(card.getAttribute('data-price'));
-                    const title = card.querySelector('.opt-title').innerText;
+            options.forEach(opt => {
+                if(opt.classList.contains('is-selected')) {
+                    const price = parseInt(opt.getAttribute('data-price'));
+                    const title = opt.querySelector('.opt-title').innerText;
                     total += price;
+
+                    if(opt.getAttribute('data-type') === 'main') {
+                        selectedMainTitle = title;
+                    } else {
+                        selectedAddonsList.push(title);
+                    }
 
                     const li = document.createElement('li');
                     li.classList.add('calc-summary-item');
@@ -1351,145 +948,39 @@
                 }
             });
 
-            // Plynulé animovanie čísla celkovej sumy pomocou GSAP
-            gsap.to(totalPriceZone, {
-                innerText: total,
-                duration: 0.4,
-                snap: { innerText: 1 },
-                modifiers: {
-                    innerText: function(value) {
-                        return Math.round(value) + '<span>€</span>';
-                    }
-                }
-            });
-        }
-        recalculateSystemBudget(); // Inicializácia stavu
-
-        optionCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const type = card.getAttribute('data-type');
-                if(type === 'main') {
-                    document.querySelectorAll('.calc-card-option[data-type="main"]').forEach(c => c.classList.remove('is-selected'));
-                    card.classList.add('is-selected');
-                } else {
-                    card.classList.toggle('is-selected');
-                }
-                recalculateSystemBudget();
-            });
-        });
-
-        /* ==========================================================================
-           MODULO V: ADVANCED GSAP SCROLL-LINKED ARCHITECTURE
-           ========================================================================== */
-        gsap.registerPlugin(ScrollTrigger);
-
-        function executeScrollAnimations() {
-            // Intro sekvencia pre Hero prvky po vypnutí preloaderu
-            const introTimeline = gsap.timeline();
-            introTimeline.to('#hero-tag', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
-                         .to('#hero-title', { opacity: 1, y: 0, duration: 1, ease: 'power4.out' }, '-=0.5')
-                         .to('#hero-desc', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
-                         .to('#hero-btn', { opacity: 1, duration: 0.5 }, '-=0.4');
-
-            // Parallax odsun textu a zväčšenie Hero boxu pri skrolovaní nadol
-            gsap.to('.hero-master-box', {
-                scrollTrigger: {
-                    trigger: '.hero-viewport',
-                    start: 'top top',
-                    end: 'bottom top',
-                    scrub: true
-                },
-                yPercent: 30,
-                scale: 0.95,
-                opacity: 0,
-                ease: 'none'
-            });
-
-            // Parallax efekt pre obrázok v sekcii "O Nás"
-            gsap.to('#about-img', {
-                scrollTrigger: {
-                    trigger: '#about-media-trigger',
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: true
-                },
-                scale: 1.25,
-                yPercent: -10,
-                ease: 'none'
-            });
-
-            // RIGID HORIZONTAL SCROLL ENGINE (Spúšťa sa len pre monitory nad 1200px)
-            if(window.innerWidth > 1200) {
-                const wrapper = document.getElementById('horizontal-wrapper');
-                gsap.to(wrapper, {
-                    x: () => -(wrapper.scrollWidth - window.innerWidth),
-                    ease: 'none',
-                    scrollTrigger: {
-                        trigger: '#portfolio',
-                        pin: true,
-                        scrub: 1,
-                        start: 'top top',
-                        end: () => '+=' + (wrapper.scrollWidth - window.innerWidth),
-                        invalidateOnRefresh: true
-                    }
-                });
-            }
-        }
-
-        /* ==========================================================================
-           MODULO VI: HARDWARE 3D TILT ENGINE FOR MEMBER CARDS
-           ========================================================================== */
-        const tiltCards = document.querySelectorAll('[data-tilt-element]');
-        
-        tiltCards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const midX = rect.width / 2;
-                const midY = rect.height / 2;
-                
-                const angleX = (midY - y) / 12;
-                const angleY = (x - midX) / 12;
-                
-                card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.02)`;
-            });
+            totalDisplay.innerHTML = `${total}<span>€</span>`;
             
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+            // Bridge do formulára nezáväznej rezervácie
+            const addonsString = selectedAddonsList.length > 0 ? ` (+ ${selectedAddonsList.join(', ')})` : "";
+            formPackageText.innerText = `${selectedMainTitle}${addonsString}`;
+            formPriceText.innerText = `Cena: ${total}€`;
+        }
+        updateCalculator();
+
+        options.forEach(opt => {
+            opt.addEventListener('click', () => {
+                if(opt.getAttribute('data-type') === 'main') {
+                    document.querySelectorAll('.calc-card-option[data-type="main"]').forEach(c => c.classList.remove('is-selected'));
+                    opt.classList.add('is-selected');
+                } else {
+                    opt.classList.toggle('is-selected');
+                }
+                updateCalculator();
             });
         });
 
         /* ==========================================================================
-           MODULO VII: IMMERSIVE CINEMATIC VIDEO CONTROLLER MODAL
+           5. CINEMATIC MODAL CONTROLLER
            ========================================================================== */
-        const openModalBtn = document.getElementById('open-video');
-        const closeModalBtn = document.getElementById('close-video');
-        const modalElement = document.getElementById('video-modal-view');
-        const iframeElement = document.getElementById('modal-iframe');
-        
-        // Link na Vimeo showreel alebo YouTube, prepojené s bezpečným prenosom
-        const showreelUrl = "https://player.vimeo.com/video/347119290?autoplay=1&color=e5c158";
+        const openBtn = document.getElementById('open-video');
+        const closeBtn = document.getElementById('close-video');
+        const modal = document.getElementById('video-modal-view');
+        const iframe = document.getElementById('modal-iframe');
+        const videoUrl = "https://player.vimeo.com/video/347119290?autoplay=1&color=e5c158";
 
-        openModalBtn.addEventListener('click', () => {
-            iframeElement.setAttribute('src', showreelUrl);
-            modalElement.classList.add('is-active');
-        });
-
-        closeModalBtn.addEventListener('click', () => {
-            iframeElement.setAttribute('src', '');
-            modalElement.classList.remove('is-active');
-        });
-
-        // Zatvorenie modalu kliknutím mimo okna prehrávača
-        modalElement.addEventListener('click', (e) => {
-            if(e.target === modalElement) {
-                iframeElement.setAttribute('src', '');
-                modalElement.classList.remove('is-active');
-            }
-        });
+        openBtn.addEventListener('click', () => { iframe.setAttribute('src', videoUrl); modal.classList.add('is-active'); });
+        closeBtn.addEventListener('click', () => { iframe.setAttribute('src', ''); modal.classList.remove('is-active'); });
+        modal.addEventListener('click', (e) => { if(e.target === modal) { iframe.setAttribute('src', ''); modal.classList.remove('is-active'); } });
     </script>
-
 </body>
 </html>
